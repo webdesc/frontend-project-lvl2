@@ -2,9 +2,12 @@
 
 const { program } = require('commander');
 
-program.on('--help', () => {
-  console.log('');
-  console.log('Compares two configuration files and shows a difference.');
-});
+program
+  .version('1.0.0')
+  .description('Compares two configuration files and shows a difference.')
+  .arguments('<firstConfig> <secondConfig>')
+  .option('-f, --format [type]', 'output format');
 
 program.parse(process.argv);
+
+console.log(program.args);
