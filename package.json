@@ -2,7 +2,7 @@
   "name": "gendiff-local",
   "version": "1.0.0",
   "description": "Compares two configuration files and shows a difference.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "bin": {
     "gendiff": "dist/bin/gendiff.js"
   },
