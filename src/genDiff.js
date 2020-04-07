@@ -7,17 +7,17 @@ export default (beforeConfigPath, afterConfigPath) => {
   const diff = allConfigKeys.reduce((acc, key) => {
     if (beforeConfig.hasOwnProperty(key) && afterConfig.hasOwnProperty(key)) {
       if (beforeConfig[key] === afterConfig[key]) {
-        return [...acc, `${key}: ${beforeConfig[key]}`];
+        return [...acc, ` ${key}: ${beforeConfig[key]}`];
       }
       if (beforeConfig[key] !== afterConfig[key]) {
-        return [...acc, `- ${key}: ${beforeConfig[key]}`, `+ ${key}: ${afterConfig[key]}`];
+        return [...acc, ` - ${key}: ${beforeConfig[key]}`, ` + ${key}: ${afterConfig[key]}`];
       }
     }
     if (!afterConfig.hasOwnProperty(key)) {
-      return [...acc, `- ${key}: ${beforeConfig[key]}`];
+      return [...acc, ` - ${key}: ${beforeConfig[key]}`];
     }
     if (!beforeConfig.hasOwnProperty(key)) {
-      return [...acc, `+ ${key}: ${afterConfig[key]}`];
+      return [...acc, ` + ${key}: ${afterConfig[key]}`];
     }
     return acc;
   }, '');
