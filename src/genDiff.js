@@ -1,18 +1,19 @@
-import fs from 'fs';
 import _ from 'lodash';
 
-export default (beforeConfigPath, afterConfigPath) => {
-  const beforeConfig = JSON.parse(fs.readFileSync(beforeConfigPath));
-  const afterConfig = JSON.parse(fs.readFileSync(afterConfigPath));
+const checkEqualConfigsKey = (before, after, key) => _.has(before, key) && _.has(after, key)
+  && before[key] === after[key];
+
+const checkNotEqualConfigsKey = (before, after, key) => _.has(before, key) && _.has(after, key)
+  && before[key] !== after[key];
+
+export default (beforeConfig, afterConfig) => {
   const allConfigKeys = Object.keys({ ...beforeConfig, ...afterConfig });
   const diff = allConfigKeys.reduce((acc, key) => {
-    if (_.has(beforeConfig, key) && _.has(afterConfig, key)) {
-      if (beforeConfig[key] === afterConfig[key]) {
-        return [...acc, ` ${key}: ${beforeConfig[key]}`];
-      }
-      if (beforeConfig[key] !== afterConfig[key]) {
-        return [...acc, ` - ${key}: ${beforeConfig[key]}`, ` + ${key}: ${afterConfig[key]}`];
-      }
+    if (checkEqualConfigsKey(beforeConfig, afterConfig, key)) {
+      return [...acc, ` ${key}: ${beforeConfig[key]}`];
+    }
+    if (checkNotEqualConfigsKey(beforeConfig, afterConfig, key)) {
+      return [...acc, ` - ${key}: ${beforeConfig[key]}`, ` + ${key}: ${afterConfig[key]}`];
     }
     if (!_.has(afterConfig, key)) {
       return [...acc, ` - ${key}: ${beforeConfig[key]}`];
