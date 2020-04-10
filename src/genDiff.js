@@ -1,9 +1,11 @@
 import _ from 'lodash';
 
-const checkEqualConfigsKey = (before, after, key) => _.has(before, key) && _.has(after, key)
+const hasKeyAllConfigs = (before, after, key) => _.has(before, key) && _.has(after, key);
+
+const checkEqualConfigsKey = (before, after, key) => hasKeyAllConfigs(before, after, key)
   && before[key] === after[key];
 
-const checkNotEqualConfigsKey = (before, after, key) => _.has(before, key) && _.has(after, key)
+const checkNotEqualConfigsKey = (before, after, key) => hasKeyAllConfigs(before, after, key)
   && before[key] !== after[key];
 
 export default (beforeConfig, afterConfig) => {
