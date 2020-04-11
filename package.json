@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "commander": "^5.0.0",
+    "js-yaml": "^3.13.1",
     "lodash": "^4.17.15"
   },
   "devDependencies": {
@@ -28,6 +29,7 @@
   },
   "scripts": {
     "test": "jest",
+    "test-watch": "jest --watch",
     "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
     "prepublishOnly": "npm run build"
   },
