@@ -3,11 +3,13 @@ import path from 'path';
 
 import JsonParser from './parsers/jsonParser';
 import YamlParser from './parsers/yamlParser';
+import IniParser from './parsers/iniParser';
 
 const mapFormatToClass = {
   json: JsonParser,
   yaml: YamlParser,
   yml: YamlParser,
+  ini: IniParser,
 };
 
 export default class ConfigFactory {

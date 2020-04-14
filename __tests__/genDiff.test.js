@@ -18,3 +18,9 @@ test('plain equals yaml', () => {
   const after = ConfigFactory.factory(getFixturePath('after.yml'));
   expect(gendiff(before, after)).toBe(plainEqualsResult);
 });
+
+test('plain equals ini', () => {
+  const before = ConfigFactory.factory(getFixturePath('before.ini'));
+  const after = ConfigFactory.factory(getFixturePath('after.ini'));
+  expect(gendiff(before, after)).toBe(plainEqualsResult);
+});
