@@ -12,16 +12,16 @@ export default (beforeConfig, afterConfig) => {
   const allConfigKeys = Object.keys({ ...beforeConfig, ...afterConfig });
   const diff = allConfigKeys.reduce((acc, key) => {
     if (checkEqualConfigsKey(beforeConfig, afterConfig, key)) {
-      return [...acc, ` ${key}: ${beforeConfig[key]}`];
+      return [...acc, `${key}: ${beforeConfig[key]}`];
     }
     if (checkNotEqualConfigsKey(beforeConfig, afterConfig, key)) {
-      return [...acc, ` - ${key}: ${beforeConfig[key]}`, ` + ${key}: ${afterConfig[key]}`];
+      return [...acc, `- ${key}: ${beforeConfig[key]}`, `+ ${key}: ${afterConfig[key]}`];
     }
     if (!_.has(afterConfig, key)) {
-      return [...acc, ` - ${key}: ${beforeConfig[key]}`];
+      return [...acc, `- ${key}: ${beforeConfig[key]}`];
     }
     if (!_.has(beforeConfig, key)) {
-      return [...acc, ` + ${key}: ${afterConfig[key]}`];
+      return [...acc, `+ ${key}: ${afterConfig[key]}`];
     }
     return acc;
   }, '');
