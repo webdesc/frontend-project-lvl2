@@ -2,6 +2,4 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/b7b07a303033bbf5b914/test_coverage)](https://codeclimate.com/github/webdesc/frontend-project-lvl2/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b7b07a303033bbf5b914/maintainability)](https://codeclimate.com/github/webdesc/frontend-project-lvl2/maintainability)
 
-[![asciicast](https://asciinema.org/a/N4qfxWK0mGrhJDh5EfYTHYWt7.svg)](https://asciinema.org/a/N4qfxWK0mGrhJDh5EfYTHYWt7)
-[![asciicast](https://asciinema.org/a/sq2mR3CF5ceQi08mZs3CR2kmN.svg)](https://asciinema.org/a/sq2mR3CF5ceQi08mZs3CR2kmN)
-[![asciicast](https://asciinema.org/a/x7025rSBs8rPoZpnvLIAKByM0.svg)](https://asciinema.org/a/x7025rSBs8rPoZpnvLIAKByM0)
+[![asciicast](https://asciinema.org/a/0jhw3pXvSLvIs7cxMWa1OfdlQ.svg)](https://asciinema.org/a/0jhw3pXvSLvIs7cxMWa1OfdlQ)

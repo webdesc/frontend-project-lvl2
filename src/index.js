@@ -1,3 +1,3 @@
-import genDiff from './genDiff';
+import generateDiff from './generateDiff';
 
-export default genDiff;
+export default generateDiff;

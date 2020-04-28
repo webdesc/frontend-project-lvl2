@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import genDiff from '..';
+import generateDiff from '..';
 import ConfigFactory from '../ConfigFactory';
 
 const { program } = require('commander');
@@ -15,15 +15,11 @@ program
     const secondConfigPath = path.resolve(process.cwd(), secondConfig);
     const beforeConfig = ConfigFactory.factory(firstConfigPath);
     const afterConfig = ConfigFactory.factory(secondConfigPath);
-    const diff = genDiff(beforeConfig, afterConfig).split('\n');
-    console.log('{');
-    const hasFieldChanged = (first) => first === '+' || first === '-';
-    diff.forEach((item) => {
-      const spaces = hasFieldChanged(item[0]) ? ' ' : '   ';
-      console.log(spaces + item);
-    });
-    console.log('}');
+    if (program.format === 'json') {
+      const result = generateDiff(beforeConfig, afterConfig);
+      console.log(result);
+    }
   })
-  .option('-f, --format [type]', 'output format');
+  .option('-f, --format [type]', 'output format', 'json');
 
 program.parse(process.argv);
