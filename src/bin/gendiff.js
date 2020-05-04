@@ -15,10 +15,8 @@ program
     const secondConfigPath = path.resolve(process.cwd(), secondConfig);
     const beforeConfig = ConfigFactory.factory(firstConfigPath);
     const afterConfig = ConfigFactory.factory(secondConfigPath);
-    if (program.format === 'json') {
-      const result = generateDiff(beforeConfig, afterConfig);
-      console.log(result);
-    }
+    const result = generateDiff(beforeConfig, afterConfig, program.format);
+    console.log(result);
   })
   .option('-f, --format [type]', 'output format', 'json');
 
