@@ -11,12 +11,17 @@ program
   .description('Compares two configuration files and shows a difference.')
   .arguments('<firstConfig> <secondConfig>')
   .action((firstConfig, secondConfig) => {
-    const firstConfigPath = path.resolve(process.cwd(), firstConfig);
-    const secondConfigPath = path.resolve(process.cwd(), secondConfig);
-    const beforeConfig = ConfigFactory.factory(firstConfigPath);
-    const afterConfig = ConfigFactory.factory(secondConfigPath);
-    const result = generateDiff(beforeConfig, afterConfig, program.format);
-    console.log(result);
+    try {
+      const firstConfigPath = path.resolve(process.cwd(), firstConfig);
+      const secondConfigPath = path.resolve(process.cwd(), secondConfig);
+      const beforeConfig = ConfigFactory.factory(firstConfigPath);
+      const afterConfig = ConfigFactory.factory(secondConfigPath);
+      const result = generateDiff(beforeConfig, afterConfig, program.format);
+      console.log(result);
+    } catch (e) {
+      console.error(e.message);
+    }
+    
   })
   .option('-f, --format [type]', 'output format', 'pretty');
 

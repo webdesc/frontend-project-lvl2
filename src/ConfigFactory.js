@@ -14,9 +14,16 @@ const mapFormatToClass = {
 
 export default class ConfigFactory {
   static factory(filePath) {
+    if (!fs.existsSync(filePath)) {
+      throw new Error('ERROR: Impossible to generate a difference. Check the paths are correct.');
+    }
     const format = path.extname(filePath).slice(1);
-    const rawData = fs.readFileSync(filePath).toString();
+    const data = fs.readFileSync(filePath);
+    const rawData = data.toString();
     const ParserClass = mapFormatToClass[format];
+    if (!ParserClass) {
+      throw new Error(`ERROR: Format '${format}' not supported.`);
+    }
     const parser = new ParserClass();
     return parser.parse(rawData);
   }
