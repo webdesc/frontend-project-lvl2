@@ -21,7 +21,6 @@ program
     } catch (e) {
       console.error(e.message);
     }
-    
   })
   .option('-f, --format [type]', 'output format', 'pretty');
 
