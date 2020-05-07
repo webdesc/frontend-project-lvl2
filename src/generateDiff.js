@@ -1,5 +1,5 @@
 import _ from 'lodash';
-
+import sortAlphabet from './utils';
 import Formatter from './formatters';
 
 const hasKeyAllConfigs = (before, after, key) => _.has(before, key) && _.has(after, key);
@@ -13,16 +13,6 @@ const checkNotEqualConfigsKey = (before, after, key) => hasKeyAllConfigs(before,
 const checkChildrensConfigsKeys = (before, after, key) => hasKeyAllConfigs(before, after, key)
   && _.isObject(before[key]) && _.isObject(after[key]);
 
-const sortFieldsName = (a, b) => {
-  if (a.name > b.name) {
-    return 1;
-  }
-  if (a.name < b.name) {
-    return -1;
-  }
-  return 0;
-};
-
 const generateDiffAST = (beforeConfig, afterConfig) => {
   const allConfigKeys = Object.keys({ ...beforeConfig, ...afterConfig });
   const diffAST = allConfigKeys.reduce((acc, key) => {
@@ -31,7 +21,7 @@ const generateDiffAST = (beforeConfig, afterConfig) => {
         name: key,
         value: null,
         status: 'nochanged',
-        childrens: generateDiffAST(beforeConfig[key], afterConfig[key]).sort(sortFieldsName),
+        childrens: generateDiffAST(beforeConfig[key], afterConfig[key]).sort(sortAlphabet),
       }];
     }
     if (checkEqualConfigsKey(beforeConfig, afterConfig, key)) {
@@ -63,12 +53,12 @@ const generateDiffAST = (beforeConfig, afterConfig) => {
         status: 'added',
       }];
     }
-    return acc.sort(sortFieldsName);
+    return acc.sort(sortAlphabet);
   }, []);
   return diffAST;
 };
 
-export default (beforeConfig, afterConfig, format) => {
+export default (beforeConfig, afterConfig, format = 'pretty') => {
   const ast = generateDiffAST(beforeConfig, afterConfig);
   const formatter = new Formatter(format);
   return formatter.parse(ast);

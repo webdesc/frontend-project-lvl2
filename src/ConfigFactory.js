@@ -16,7 +16,8 @@ export default class ConfigFactory {
   static factory(filePath) {
     const format = path.extname(filePath).slice(1);
     const rawData = fs.readFileSync(filePath).toString();
-    const parser = new mapFormatToClass[format]();
+    const ParserClass = mapFormatToClass[format];
+    const parser = new ParserClass();
     return parser.parse(rawData);
   }
 }

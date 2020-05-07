@@ -1,7 +1,9 @@
+import FormatPretty from './formatPretty';
 import FormatJson from './formatJson';
 import FormatPlain from './formatPlain';
 
 const mapFormatToClass = {
+  pretty: FormatPretty,
   json: FormatJson,
   plain: FormatPlain,
 };

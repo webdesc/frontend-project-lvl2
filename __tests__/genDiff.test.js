@@ -5,7 +5,7 @@ import generateDiff from '../src';
 
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 
-const jsonEqualsResult = `{
+const prettyEqualsResult = `{
     common: {
       + follow: false
         setting1: Value 1
@@ -51,25 +51,27 @@ Property 'group1.nest' was changed from [complex value] to 'str'
 Property 'group2' was deleted
 Property 'group3' was added with value: [complex value]`;
 
-test('json equals json format', () => {
+const jsonEqualsResult = '[{"name":"common","value":null,"status":"nochanged","childrens":[{"name":"follow","value":false,"status":"added"},{"name":"setting1","value":"Value 1","status":"nochanged"},{"name":"setting2","value":200,"status":"removed"},{"name":"setting3","value":{"key":"value"},"oldValue":true,"status":"modified"},{"name":"setting4","value":"blah blah","status":"added"},{"name":"setting5","value":{"key5":"value5"},"status":"added"},{"name":"setting6","value":null,"status":"nochanged","childrens":[{"name":"key","value":"value","status":"nochanged"},{"name":"ops","value":"vops","status":"added"}]}]},{"name":"group1","value":null,"status":"nochanged","childrens":[{"name":"baz","value":"bars","oldValue":"bas","status":"modified"},{"name":"foo","value":"bar","status":"nochanged"},{"name":"nest","value":"str","oldValue":{"key":"value"},"status":"modified"}]},{"name":"group2","value":{"abc":12345},"status":"removed"},{"name":"group3","value":{"fee":100500},"status":"added"}]';
+
+test('pretty equals json format', () => {
   const before = ConfigFactory.factory(getFixturePath('before.json'));
   const after = ConfigFactory.factory(getFixturePath('after.json'));
-  const result = generateDiff(before, after, 'json');
-  expect(result).toBe(jsonEqualsResult);
+  const result = generateDiff(before, after);
+  expect(result).toBe(prettyEqualsResult);
 });
 
-test('json equals yaml format', () => {
+test('pretty equals yaml format', () => {
   const before = ConfigFactory.factory(getFixturePath('before.yml'));
   const after = ConfigFactory.factory(getFixturePath('after.yml'));
-  const result = generateDiff(before, after, 'json');
-  expect(result).toBe(jsonEqualsResult);
+  const result = generateDiff(before, after);
+  expect(result).toBe(prettyEqualsResult);
 });
 
-test('json equals ini format', () => {
+test('pretty equals ini format', () => {
   const before = ConfigFactory.factory(getFixturePath('before.ini'));
   const after = ConfigFactory.factory(getFixturePath('after.ini'));
-  const result = generateDiff(before, after, 'json');
-  expect(result).toBe(jsonEqualsResult);
+  const result = generateDiff(before, after);
+  expect(result).toBe(prettyEqualsResult);
 });
 
 test('plain equals json format', () => {
@@ -91,4 +93,25 @@ test('plain equals ini format', () => {
   const after = ConfigFactory.factory(getFixturePath('after.ini'));
   const result = generateDiff(before, after, 'plain');
   expect(result).toBe(plainEqualsResult);
+});
+
+test('json equals json format', () => {
+  const before = ConfigFactory.factory(getFixturePath('before.json'));
+  const after = ConfigFactory.factory(getFixturePath('after.json'));
+  const result = generateDiff(before, after, 'json');
+  expect(result).toBe(jsonEqualsResult);
+});
+
+test('json equals yaml format', () => {
+  const before = ConfigFactory.factory(getFixturePath('before.yml'));
+  const after = ConfigFactory.factory(getFixturePath('after.yml'));
+  const result = generateDiff(before, after, 'json');
+  expect(result).toBe(jsonEqualsResult);
+});
+
+test('json equals ini format', () => {
+  const before = ConfigFactory.factory(getFixturePath('before.ini'));
+  const after = ConfigFactory.factory(getFixturePath('after.ini'));
+  const result = generateDiff(before, after, 'json');
+  expect(result).toBe(jsonEqualsResult);
 });

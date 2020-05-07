@@ -18,6 +18,6 @@ program
     const result = generateDiff(beforeConfig, afterConfig, program.format);
     console.log(result);
   })
-  .option('-f, --format [type]', 'output format', 'json');
+  .option('-f, --format [type]', 'output format', 'pretty');
 
 program.parse(process.argv);
