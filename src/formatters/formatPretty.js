@@ -6,11 +6,11 @@ const calcIndent = (level, changed = false) => (' '.repeat((4 * level) - (change
 
 const stringify = (data, level) => {
   const indentField = calcIndent(level, false);
-  const indentBracket = calcIndent(level - 1, false);
+  const indentCloseBracket = calcIndent(level - 1, false);
   if (_.isObject(data)) {
     const keys = Object.keys(data);
     const items = keys.map((key) => (`${indentField}${key}: ${data[key]}`));
-    return ['{', ...items, `${indentBracket}}`].join('\n');
+    return ['{', ...items, `${indentCloseBracket}}`].join('\n');
   }
   return data;
 };
@@ -41,8 +41,4 @@ const generateDiffArr = (ast, level = 1) => {
   return diffArr;
 };
 
-export default class {
-  parse(ast) {
-    return ['{', ...generateDiffArr(ast), '}'].join('\n');
-  }
-}
+export default (ast) => ['{', ...generateDiffArr(ast), '}'].join('\n');

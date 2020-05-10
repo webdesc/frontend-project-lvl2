@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import sortAlphabet from './utils';
-import Formatter from './formatters';
+import getFormatter from './formatters';
 
 const hasKeyAllConfigs = (before, after, key) => _.has(before, key) && _.has(after, key);
 
@@ -60,6 +60,6 @@ const generateDiffAST = (beforeConfig, afterConfig) => {
 
 export default (beforeConfig, afterConfig, format = 'pretty') => {
   const ast = generateDiffAST(beforeConfig, afterConfig);
-  const formatter = new Formatter(format);
-  return formatter.parse(ast);
+  const formatData = getFormatter(format);
+  return formatData(ast);
 };

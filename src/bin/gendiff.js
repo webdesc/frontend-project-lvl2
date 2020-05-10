@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import generateDiff from '..';
-import ConfigFactory from '../ConfigFactory';
+import configFactory from '../configFactory';
 
 const { program } = require('commander');
 const path = require('path');
@@ -14,8 +14,8 @@ program
     try {
       const firstConfigPath = path.resolve(process.cwd(), firstConfig);
       const secondConfigPath = path.resolve(process.cwd(), secondConfig);
-      const beforeConfig = ConfigFactory.factory(firstConfigPath);
-      const afterConfig = ConfigFactory.factory(secondConfigPath);
+      const beforeConfig = configFactory(firstConfigPath);
+      const afterConfig = configFactory(secondConfigPath);
       const result = generateDiff(beforeConfig, afterConfig, program.format);
       console.log(result);
     } catch (e) {

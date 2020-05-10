@@ -35,8 +35,4 @@ const generateDiffArr = (ast, names = []) => {
   return diffArr;
 };
 
-export default class {
-  parse(ast) {
-    return generateDiffArr(ast).join('\n');
-  }
-}
+export default (ast) => generateDiffArr(ast).join('\n');

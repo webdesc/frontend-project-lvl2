@@ -1,19 +1,13 @@
-import FormatPretty from './formatPretty';
-import FormatJson from './formatJson';
-import FormatPlain from './formatPlain';
+import formatPretty from './formatPretty';
+import formatJson from './formatJson';
+import formatPlain from './formatPlain';
 
-const mapFormatToClass = {
-  pretty: FormatPretty,
-  json: FormatJson,
-  plain: FormatPlain,
+const mapFormatToFormatter = {
+  pretty: formatPretty,
+  json: formatJson,
+  plain: formatPlain,
 };
 
-export default class {
-  constructor(format) {
-    this.formatter = new mapFormatToClass[format]();
-  }
+const getFormatter = (format) => mapFormatToFormatter[format];
 
-  parse(ast) {
-    return this.formatter.parse(ast);
-  }
-}
+export default getFormatter;
