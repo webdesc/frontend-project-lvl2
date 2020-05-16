@@ -1,8 +1,6 @@
-/* eslint-disable class-methods-use-this */
-
 import _ from 'lodash';
-
 import ini from 'ini';
+import yaml from 'js-yaml';
 
 const fixNumberValues = (iniData) => {
   const correctedData = Object.keys(iniData).reduce((acc, key) => {
@@ -17,4 +15,19 @@ const fixNumberValues = (iniData) => {
   return correctedData;
 };
 
-export default (data) => fixNumberValues(ini.parse(data));
+const mapFormatToParser = {
+  json: (data) => JSON.parse(data),
+  yaml: (data) => yaml.safeLoad(data),
+  yml: (data) => yaml.safeLoad(data),
+  ini: (data) => fixNumberValues(ini.parse(data)),
+};
+
+const configFactory = (data, format) => {
+  const parse = mapFormatToParser[format];
+  if (!parse) {
+    throw new Error(`ERROR: Format '${format}' not supported.`);
+  }
+  return parse(data);
+};
+
+export default configFactory;
