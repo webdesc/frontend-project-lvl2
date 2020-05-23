@@ -17,13 +17,6 @@ const sortAlphabet = (a, b) => {
 const generateDiffAST = (before, after) => {
   const keys = _.union(_.keys(before), _.keys(after));
   const diffAST = keys.sort(sortAlphabet).map((key) => {
-    if (before[key] === after[key]) {
-      return {
-        name: key,
-        value: after[key],
-        status: 'nochanged',
-      };
-    }
     if (!_.has(before, key)) {
       return {
         name: key,
@@ -54,6 +47,11 @@ const generateDiffAST = (before, after) => {
         children: generateDiffAST(before[key], after[key]).sort(sortAlphabet),
       };
     }
+    return {
+      name: key,
+      value: after[key],
+      status: 'nochanged',
+    };
   });
   return diffAST;
 };
