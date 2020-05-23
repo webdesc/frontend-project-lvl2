@@ -12,7 +12,7 @@ const getValueProperty = (value) => {
   return `'${value}'`;
 };
 
-const generateDiffArr = (ast, names = []) => {
+const generateDiffs = (ast, names = []) => {
   const diffArr = ast.reduce((acc, node) => {
     if (node.status === 'removed') {
       return [...acc, `Property '${[...names, node.name].join('.')}' was deleted`];
@@ -24,15 +24,12 @@ const generateDiffArr = (ast, names = []) => {
     if (node.status === 'modified') {
       return [...acc, `Property '${[...names, node.name].join('.')}' was changed from ${getValueProperty(node.oldValue)} to ${getValueProperty(node.value)}`];
     }
-    if (node.status === 'nochanged') {
-      if (node.childrens) {
-        return [...acc, ...generateDiffArr(node.childrens, [...names, node.name])];
-      }
-      return acc;
+    if (node.status === 'nested') {
+      return [...acc, ...generateDiffs(node.children, [...names, node.name])];
     }
     return acc;
   }, []);
   return diffArr;
 };
 
-export default (ast) => generateDiffArr(ast).join('\n');
+export default (ast) => generateDiffs(ast).join('\n');

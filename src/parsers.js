@@ -16,13 +16,13 @@ const fixNumberValues = (iniData) => {
 };
 
 const mapFormatToParser = {
-  json: (data) => JSON.parse(data),
-  yaml: (data) => yaml.safeLoad(data),
-  yml: (data) => yaml.safeLoad(data),
+  json: JSON.parse,
+  yaml: yaml.safeLoad,
+  yml: yaml.safeLoad,
   ini: (data) => fixNumberValues(ini.parse(data)),
 };
 
-const configFactory = (data, format) => {
+const createConfig = (data, format) => {
   const parse = mapFormatToParser[format];
   if (!parse) {
     throw new Error(`ERROR: Format '${format}' not supported.`);
@@ -30,4 +30,4 @@ const configFactory = (data, format) => {
   return parse(data);
 };
 
-export default configFactory;
+export default createConfig;
