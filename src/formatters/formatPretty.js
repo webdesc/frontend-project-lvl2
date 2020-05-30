@@ -16,24 +16,23 @@ const stringify = (data, level) => {
 const generateDiffs = (ast, level = 1) => {
   const indentNochanged = calcIndent(level, false);
   const indentChanged = calcIndent(level, true);
-  const diffArr = ast.map((node) => {
-    const valueStr = stringify(node.value, level + 1);
+  const diffs = ast.map((node) => {
+    const valueStr = stringify(node.newValue, level + 1);
     const oldValueStr = stringify(node.oldValue, level + 1);
-    if (node.status === 'removed') {
-      return `${indentChanged}- ${node.name}: ${valueStr}`;
+    switch (node.status) {
+      case 'removed':
+        return `${indentChanged}- ${node.name}: ${valueStr}`;
+      case 'added':
+        return `${indentChanged}+ ${node.name}: ${valueStr}`;
+      case 'modified':
+        return `${indentChanged}- ${node.name}: ${oldValueStr}\n${indentChanged}+ ${node.name}: ${valueStr}`;
+      case 'nested':
+        return `${indentNochanged}${node.name}: {\n${generateDiffs(node.children, level + 1).join('\n')}\n${indentNochanged}}`;
+      default:
+        return `${indentNochanged}${node.name}: ${valueStr}`;
     }
-    if (node.status === 'added') {
-      return `${indentChanged}+ ${node.name}: ${valueStr}`;
-    }
-    if (node.status === 'modified') {
-      return `${indentChanged}- ${node.name}: ${oldValueStr}\n${indentChanged}+ ${node.name}: ${valueStr}`;
-    }
-    if (node.status === 'nested') {
-      return `${indentNochanged}${node.name}: {\n${generateDiffs(node.children, level + 1).join('\n')}\n${indentNochanged}}`;
-    }
-    return `${indentNochanged}${node.name}: ${valueStr}`;
   });
-  return diffArr;
+  return diffs;
 };
 
 export default (ast) => ['{', ...generateDiffs(ast), '}'].join('\n');

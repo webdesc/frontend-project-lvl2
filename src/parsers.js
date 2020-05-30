@@ -22,7 +22,7 @@ const mapFormatToParser = {
   ini: (data) => fixNumberValues(ini.parse(data)),
 };
 
-const createConfig = (data, format) => {
+const parseData = (data, format) => {
   const parse = mapFormatToParser[format];
   if (!parse) {
     throw new Error(`ERROR: Format '${format}' not supported.`);
@@ -30,4 +30,4 @@ const createConfig = (data, format) => {
   return parse(data);
 };
 
-export default createConfig;
+export default parseData;
