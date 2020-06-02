@@ -14,17 +14,20 @@ const getValueProperty = (value) => {
 
 const generateDiffs = (ast, names = []) => {
   const diffs = ast.map((node) => {
+    const propertyName = [...names, node.name].join('.');
     switch (node.status) {
       case 'added':
-        return `Property '${[...names, node.name].join('.')}' was added with value: ${getValueProperty(node.newValue)}`;
+        return `Property '${propertyName}' was added with value: ${getValueProperty(node.newValue)}`;
       case 'removed':
-        return `Property '${[...names, node.name].join('.')}' was deleted`;
+        return `Property '${propertyName}' was deleted`;
       case 'modified':
-        return `Property '${[...names, node.name].join('.')}' was changed from ${getValueProperty(node.oldValue)} to ${getValueProperty(node.newValue)}`;
+        return `Property '${propertyName}' was changed from ${getValueProperty(node.oldValue)} to ${getValueProperty(node.newValue)}`;
       case 'nested':
         return generateDiffs(node.children, [...names, node.name]).join('\n');
-      default:
+      case 'nochanged':
         return '';
+      default:
+        throw new Error(`Unknown node status: '${node.status}' with plain format`);
     }
   });
   return diffs.filter((element) => element.length > 0);
