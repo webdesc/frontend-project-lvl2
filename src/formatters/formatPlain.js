@@ -25,12 +25,12 @@ const generateDiffs = (ast, names = []) => {
       case 'nested':
         return generateDiffs(node.children, [...names, node.name]).join('\n');
       case 'nochanged':
-        return '';
+        return null;
       default:
         throw new Error(`Unknown node status: '${node.status}' with plain format`);
     }
   });
-  return diffs.filter((element) => element.length > 0);
+  return diffs.filter((element) => element !== null);
 };
 
 export default (ast) => generateDiffs(ast).join('\n');
